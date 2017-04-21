@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Watch Your Diabetes</string>
+    <string name="title_activity_editable_information">EditableInformation</string>
+</resources>
