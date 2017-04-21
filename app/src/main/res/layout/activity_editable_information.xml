@@ -15,42 +15,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="43dp"
-        android:id="@+id/continue1"
+        android:id="@+id/continuebutton2"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_marginTop="36dp"
-        android:id="@+id/editText19"
-        tools:text="Post Lunch Blood Sugar"
-        android:layout_below="@+id/editText18"
-        android:layout_alignStart="@+id/editText18" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weight"
         android:ems="10"
         android:layout_marginTop="48dp"
-        android:id="@+id/editText11"
+        android:id="@+id/weight"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:inputType="numberDecimal" />
+        android:hint="Weight"
+        android:inputType="number" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:text="Fasting Blood Sugar"
         android:ems="10"
         android:layout_marginTop="42dp"
-        android:id="@+id/editText18"
-        android:layout_below="@+id/editText12"
-        android:layout_alignStart="@+id/editText12" />
+        android:id="@+id/fastbloodsugar"
+        android:layout_below="@+id/height"
+        android:layout_alignStart="@+id/height"
+        android:hint="Fasting Blood Sugar" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -60,29 +49,40 @@
         android:layout_marginBottom="20dp"
         android:id="@+id/editText21"
         tools:text="HBA1C"
-        android:layout_above="@+id/continue1"
-        android:layout_alignStart="@+id/editText19" />
+        android:layout_above="@+id/continuebutton2"
+        android:layout_alignStart="@+id/postlunchbloodsugar" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:layout_marginBottom="20dp"
-        android:id="@+id/editText20"
-        tools:text="HBA1C"
-        android:layout_above="@+id/continue1"
-        android:layout_alignStart="@+id/editText19" />
+        android:id="@+id/hba"
+        android:hint="HBA1C"
+        android:layout_alignBaseline="@+id/editText21"
+        android:layout_alignBottom="@+id/editText21"
+        android:layout_alignStart="@+id/editText21" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Height"
         android:ems="10"
-        android:layout_marginTop="39dp"
-        android:id="@+id/editText12"
-        android:layout_below="@+id/editText11"
-        android:layout_alignStart="@+id/editText11"
-        android:inputType="numberDecimal" />
+        android:id="@+id/height"
+        android:hint="Height"
+        android:layout_below="@+id/weight"
+        android:layout_alignStart="@+id/weight"
+        android:layout_marginTop="20dp"
+        android:inputType="number" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/postlunchbloodsugar"
+        android:hint="Post Lunch Blood Sugar"
+        android:layout_above="@+id/editText21"
+        android:layout_alignStart="@+id/fastbloodsugar"
+        android:layout_marginBottom="22dp" />
 
 </RelativeLayout>
