@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class SetupAppointment extends AppCompatActivity {
 
@@ -20,6 +21,14 @@ public class SetupAppointment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_appointment);
+
+        final DatabaseHandler db = new DatabaseHandler(this);
+
+        Prescription pres = db.getPrescription(1);
+
+        String to_print = "Success! Your endocrinologist prescription is as follows: " + pres.getMedicine1() + " = " + String.valueOf(pres.getDosage1());
+
+        Toast.makeText(this, to_print, Toast.LENGTH_SHORT);
 
         endo = (Button) findViewById(R.id.Endocrinologist);
         endo.setOnClickListener(new View.OnClickListener(){

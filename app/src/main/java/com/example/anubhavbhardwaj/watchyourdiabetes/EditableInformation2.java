@@ -33,6 +33,15 @@ public class EditableInformation2 extends AppCompatActivity {
                 EditText vdosage3 = (EditText) findViewById(R.id.dosage3);
 
 
+                String medicine1 = vmedicine1.getText().toString();
+                String medicine2 = vmedicine2.getText().toString();
+                String medicine3 = vmedicine3.getText().toString();
+
+                int dosage1 = Integer.parseInt(vdosage1.getText().toString());
+                int dosage2 = Integer.parseInt(vdosage2.getText().toString());
+                int dosage3 = Integer.parseInt(vdosage3.getText().toString());
+
+                db.addPrescription(new Prescription(1, medicine1, dosage1, medicine2, dosage2, medicine3, dosage3));
 
                 Intent myIntent = new Intent( EditableInformation2.this, SetupAppointment.class);
                 EditableInformation2.this.startActivity(myIntent);

@@ -41,6 +41,19 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
     private static final String KEY_POST_LUNCH_BLOOD_SUGAR = "postLunchBloodSugar";
     private static final String KEY_HBA1C = "hba1c";
 
+
+    // Prescription Data table name
+    private static final String TABLE_PRESCRIPTION = "Prescription";
+
+    // Contacts Table Columns name
+    private static final String KEY_MEDICINE_1 = "medicine1";
+    private static final String KEY_DOSAGE_1 = "dosage1";
+    private static final String KEY_MEDICINE_2 = "medicine2";
+    private static final String KEY_DOSAGE_2 = "dosage2";
+    private static final String KEY_MEDICINE_3 = "medicine3";
+    private static final String KEY_DOSAGE_3 = "dosage3";
+
+
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -48,16 +61,34 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_USER + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + KEY_AGE + " INTEGER," +  KEY_SEX + " TEXT" + ")";
+        String CREATE_CONTACTS_TABLE =
+                "CREATE TABLE " + TABLE_USER + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_AGE + " INTEGER,"
+                + KEY_SEX + " TEXT" + ")";
+
         db.execSQL(CREATE_CONTACTS_TABLE);
 
-        String CREATE_USER_DATA_TABLE = "CREATE TABLE " + TABLE_USER_DATA + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_WEIGHT + " INTEGER,"
-                + KEY_HEIGHT + " INTEGER," +  KEY_FASTING_BLOOD_SUGAR + " INTEGER,"
-                + KEY_POST_LUNCH_BLOOD_SUGAR + " INTEGER," + KEY_HBA1C + " INTEGER" + ")";
+        String CREATE_USER_DATA_TABLE =
+                "CREATE TABLE " + TABLE_USER_DATA + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_WEIGHT + " INTEGER,"
+                + KEY_HEIGHT + " INTEGER,"
+                +  KEY_FASTING_BLOOD_SUGAR + " INTEGER,"
+                + KEY_POST_LUNCH_BLOOD_SUGAR + " INTEGER,"
+                + KEY_HBA1C + " INTEGER" + ")";
         db.execSQL(CREATE_USER_DATA_TABLE);
+
+        String CREATE_PRESCRIPTION_TABLE = "CREATE TABLE " + TABLE_PRESCRIPTION + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_MEDICINE_1 + " TEXT,"
+                + KEY_DOSAGE_1 + " INTEGER,"
+                + KEY_MEDICINE_2 + " TEXT,"
+                + KEY_DOSAGE_2 + " INTEGER,"
+                + KEY_MEDICINE_3 + " TEXT,"
+                + KEY_DOSAGE_3 + " INTEGER" + ")";
+        db.execSQL(CREATE_PRESCRIPTION_TABLE);
     }
 
     // Upgrading database
@@ -66,6 +97,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_DATA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRESCRIPTION);
 
         // Create tables again
         onCreate(db);
@@ -133,7 +165,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         return ans;
     }
 
-
+    // Mutable User Data
     public void addmutableUserData(MutableUserData data){
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -187,7 +219,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 new String[] { String.valueOf(data.getId()) });
     }
 
-    public void deleteUser(MutableUserData data){
+    public void deleteMutableUserData(MutableUserData data){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_USER_DATA, KEY_ID + " = ?",
                 new String[] { String.valueOf(data.getId()) });
@@ -196,6 +228,78 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
     public int getMutableUserDataCount() {
         String countQuery = "SELECT  * FROM " + TABLE_USER_DATA;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int ans = cursor.getCount();
+        cursor.close();
+
+        return ans;
+    }
+
+    // Prescription
+    public void addPrescription(Prescription pres){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, 1);
+        values.put(KEY_MEDICINE_1,  pres.getMedicine1());
+        values.put(KEY_DOSAGE_1,    pres.getDosage1());
+        values.put(KEY_MEDICINE_2,  pres.getMedicine2());
+        values.put(KEY_DOSAGE_2,    pres.getDosage2());
+        values.put(KEY_MEDICINE_3,  pres.getMedicine3());
+        values.put(KEY_DOSAGE_3,    pres.getDosage3());
+
+        db.insert(TABLE_PRESCRIPTION, null, values);
+        db.close();
+    }
+
+
+    public Prescription getPrescription(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_PRESCRIPTION, new String[] { KEY_ID,
+                        KEY_MEDICINE_1, KEY_DOSAGE_1, KEY_MEDICINE_2, KEY_DOSAGE_2, KEY_MEDICINE_3, KEY_DOSAGE_3 }, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+
+
+        Prescription pres = new Prescription(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                cursor.getString(3), Integer.parseInt(cursor.getString(4)),
+                cursor.getString(5), Integer.parseInt(cursor.getString(6)));
+
+        return pres;
+    }
+
+    public int updatePrescription(Prescription pres){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, 1);
+        values.put(KEY_MEDICINE_1,  pres.getMedicine1());
+        values.put(KEY_DOSAGE_1,    pres.getDosage1());
+        values.put(KEY_MEDICINE_2,  pres.getMedicine2());
+        values.put(KEY_DOSAGE_2,    pres.getDosage2());
+        values.put(KEY_MEDICINE_3,  pres.getMedicine3());
+        values.put(KEY_DOSAGE_3,    pres.getDosage3());
+
+
+        // updating row
+        return db.update(TABLE_PRESCRIPTION, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(pres.getId()) });
+    }
+
+    public void deletePrescription(Prescription pres){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_PRESCRIPTION, KEY_ID + " = ?",
+                new String[] { String.valueOf(pres.getId()) });
+        db.close();
+    }
+
+    public int getPrescriptionCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_PRESCRIPTION;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 
