@@ -1,5 +1,7 @@
 package com.example.anubhavbhardwaj.watchyourdiabetes;
 
+import android.util.Log;
+
 /**
  * Created by anubhavbhardwaj on 21/04/2017.
  */
@@ -26,26 +28,26 @@ public class MutableUserData {
     }
 
     int getId(){
-        return id;
+        return this.id;
     }
 
     int getWeight(){
-        return weight;
+        return this.weight;
     }
 
     int getHeight(){
-        return height;
+        return this.height;
     }
 
     int getFastingBloodSugar(){
-        return fastingBloodSugar;
+        return this.fastingBloodSugar;
     }
 
     int getPostLunchBloodSugar(){
-        return postLunchBloodSugar;
+        return this.postLunchBloodSugar;
     }
 
     int getHba1c(){
-        return hba1c;
+        return this.hba1c;
     }
 }

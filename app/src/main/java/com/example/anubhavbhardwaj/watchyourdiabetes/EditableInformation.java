@@ -3,6 +3,7 @@ package com.example.anubhavbhardwaj.watchyourdiabetes;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,8 @@ public class EditableInformation extends AppCompatActivity {
                 int fastingBloodSugar = Integer.parseInt(vfastingBloodSugar.getText().toString());
                 int postLunchBloodSugar = Integer.parseInt(vpostLunchBloodSugar.getText().toString());
                 int hba1c = Integer.parseInt(vhba1c.getText().toString());
+
+                Log.e("OYEEEEEEEEE", String.valueOf(hba1c));
 
                 db.addmutableUserData(new MutableUserData(1, weight, height, fastingBloodSugar, postLunchBloodSugar, hba1c));
 

@@ -142,6 +142,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         values.put(KEY_POST_LUNCH_BLOOD_SUGAR, data.getPostLunchBloodSugar());
         values.put(KEY_HBA1C, data.getHba1c());
 
+
         db.insert(TABLE_USER_DATA, null, values);
         db.close();
     }
@@ -160,7 +161,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)),
                 Integer.parseInt(cursor.getString(3)), Integer.parseInt(cursor.getString(4)),
                 Integer.parseInt(cursor.getString(5)));
-        // return contact
+
         return data;
     }
 
