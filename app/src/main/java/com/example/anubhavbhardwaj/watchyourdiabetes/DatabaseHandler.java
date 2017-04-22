@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import static android.database.DatabaseUtils.dumpCursorToString;
 
 /**
  * Created by anubhavbhardwaj on 21/04/2017.
@@ -137,7 +140,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, 1);
         values.put(KEY_WEIGHT, data.getWeight());
-        values.put(KEY_WEIGHT, data.getHeight());
+        values.put(KEY_HEIGHT, data.getHeight());
         values.put(KEY_FASTING_BLOOD_SUGAR, data.getFastingBloodSugar());
         values.put(KEY_POST_LUNCH_BLOOD_SUGAR, data.getPostLunchBloodSugar());
         values.put(KEY_HBA1C, data.getHba1c());
@@ -146,6 +149,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.insert(TABLE_USER_DATA, null, values);
         db.close();
     }
+
 
     public MutableUserData getMutableUserData(){
         int id = 1;
@@ -156,6 +160,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
+
 
         MutableUserData data = new MutableUserData(Integer.parseInt(cursor.getString(0)),
                 Integer.parseInt(cursor.getString(1)), Integer.parseInt(cursor.getString(2)),
@@ -195,7 +200,6 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(countQuery, null);
 
         int ans = cursor.getCount();
-
         cursor.close();
 
         return ans;

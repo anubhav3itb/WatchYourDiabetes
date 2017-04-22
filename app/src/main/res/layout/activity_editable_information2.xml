@@ -26,7 +26,7 @@
         android:text="Medicine"
         android:ems="10"
         android:layout_marginTop="25dp"
-        android:id="@+id/editText9"
+        android:id="@+id/medicine1"
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true" />
 
@@ -35,9 +35,9 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:layout_alignBottom="@+id/editText13"
+        android:layout_alignBottom="@+id/medicine2"
         android:layout_toEndOf="@+id/textView"
-        android:id="@+id/editText14"
+        android:id="@+id/dosage2"
         android:text="Dosage" />
 
     <EditText
@@ -46,19 +46,19 @@
         android:inputType="textPersonName"
         android:text="Medicine"
         android:ems="10"
-        android:layout_below="@+id/editText13"
-        android:layout_alignEnd="@+id/editText13"
+        android:layout_below="@+id/medicine2"
+        android:layout_alignEnd="@+id/medicine2"
         android:layout_marginTop="38dp"
-        android:id="@+id/editText15" />
+        android:id="@+id/medicine3" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:layout_alignBottom="@+id/editText15"
-        android:layout_alignStart="@+id/editText14"
-        android:id="@+id/editText16"
+        android:layout_alignBottom="@+id/medicine3"
+        android:layout_alignStart="@+id/dosage2"
+        android:id="@+id/dosage3"
         android:text="Dosage" />
 
     <EditText
@@ -66,11 +66,11 @@
         android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
-        android:id="@+id/editText10"
+        android:id="@+id/dosage1"
         android:text="Dosage"
-        android:layout_alignBaseline="@+id/editText9"
-        android:layout_alignBottom="@+id/editText9"
-        android:layout_alignStart="@+id/editText14" />
+        android:layout_alignBaseline="@+id/medicine1"
+        android:layout_alignBottom="@+id/medicine1"
+        android:layout_alignStart="@+id/dosage2" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -79,9 +79,9 @@
         android:text="Medicine"
         android:ems="10"
         android:layout_marginTop="39dp"
-        android:id="@+id/editText13"
-        android:layout_below="@+id/editText9"
-        android:layout_toStartOf="@+id/editText14" />
+        android:id="@+id/medicine2"
+        android:layout_below="@+id/medicine1"
+        android:layout_toStartOf="@+id/dosage2" />
 
     <Button
         android:text="SUBMIT"
@@ -91,16 +91,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="62dp"
         android:id="@+id/submit" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Nutrirtion Details"
-        android:ems="10"
-        android:layout_marginTop="36dp"
-        android:id="@+id/editText17"
-        android:layout_below="@+id/editText15"
-        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -19,6 +19,8 @@ public class EditableInformation extends AppCompatActivity {
 
         final DatabaseHandler db = new DatabaseHandler(this);
 
+        //Log.e("FUCK THIS SHIT", String.valueOf(db.getUserCount()));
+
         continue_button = (Button) findViewById(R.id.continuebutton2);
         continue_button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -34,8 +36,6 @@ public class EditableInformation extends AppCompatActivity {
                 int fastingBloodSugar = Integer.parseInt(vfastingBloodSugar.getText().toString());
                 int postLunchBloodSugar = Integer.parseInt(vpostLunchBloodSugar.getText().toString());
                 int hba1c = Integer.parseInt(vhba1c.getText().toString());
-
-                Log.e("OYEEEEEEEEE", String.valueOf(hba1c));
 
                 db.addmutableUserData(new MutableUserData(1, weight, height, fastingBloodSugar, postLunchBloodSugar, hba1c));
 
