@@ -48,7 +48,7 @@ public class EditableInformation extends AppCompatActivity {
                 int postLunchBloodSugar = Integer.parseInt(vpostLunchBloodSugar.getText().toString());
                 int hba1c = Integer.parseInt(vhba1c.getText().toString());
 
-                db.addmutableUserData(new MutableUserData(1, weight, height, fastingBloodSugar, postLunchBloodSugar, hba1c));
+                db.updateMutableUserData(new MutableUserData(1, weight, height, fastingBloodSugar, postLunchBloodSugar, hba1c));
 
                 Intent myIntent = new Intent( EditableInformation.this, EditableInformation2.class);
                 myIntent.putExtra("doctortype", (int)1);

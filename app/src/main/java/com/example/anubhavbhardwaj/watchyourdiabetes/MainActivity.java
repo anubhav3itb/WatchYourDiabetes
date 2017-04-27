@@ -36,15 +36,17 @@ public class MainActivity extends AppCompatActivity {
             Log.d("Ooops",e.toString());
         }
 
+        final DatabaseHandler db = new DatabaseHandler(this);
+        if(db.getUserCount() > 0){
+            Intent myIntent = new Intent( MainActivity.this, Reminders.class);
+            this.startActivity(myIntent);
+            return;
+        }
+
         setOneMonthDefaults();
         setOneYearDefaults();
-        final DatabaseHandler db = new DatabaseHandler(this);
 
-//        if(db.getUserCount() > 0){
-//            Intent myIntent = new Intent( MainActivity.this, Reminder.class);
-//            this.startActivity(myIntent);
-//            return;
-//        }
+        db.addmutableUserData(new MutableUserData(1, 1, 1, 1, 1, 1));
 
         continue_button = (Button) findViewById(R.id.continuebutton2);
         continue_button.setOnClickListener(new View.OnClickListener(){

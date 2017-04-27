@@ -51,7 +51,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
     // Appointment table name
     private static final String TABLE_APPOINTMENT = "Appointment";
     // Contacts Table Columns name
-    private static final String KEY_DATE = "date";
+    private static final String KEY_DATE          = "date";
 
 
     public DatabaseHandler(Context context) {

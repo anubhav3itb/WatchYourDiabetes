@@ -149,8 +149,8 @@ public class Reminders extends AppCompatActivity {
 
         endo.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Intent myIntent = new Intent( Reminders.this, EditableInformation2.class);
-                myIntent.putExtra("doctortype", (int)1);
+                Intent myIntent = new Intent( Reminders.this, EditableInformation.class);
+                //myIntent.putExtra("doctortype", (int)1);
                 Reminders.this.startActivity(myIntent);
             }
         });
