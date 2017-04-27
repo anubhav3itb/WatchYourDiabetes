@@ -4,7 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.ActionBar;import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,11 +28,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        testAlarm();
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        try {
+            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88001b")));
+        }
+        catch (Exception e){
+            Log.d("Ooops",e.toString());
+        }
 
         setOneMonthDefaults();
         setOneYearDefaults();
-
         final DatabaseHandler db = new DatabaseHandler(this);
 
 //        if(db.getUserCount() > 0){
@@ -61,16 +69,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void testAlarm() {
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.SECOND, 10);
-
-        AlarmManager a = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent i = new Intent(this, AlarmReceiver.class);
-        PendingIntent  pi = PendingIntent.getBroadcast(this, 0, i, 0);
-        a.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-    }
-
     public void setOneMonthDefaults(){
         final DatabaseHandler db = new DatabaseHandler(this);
 
@@ -85,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
         db.addAppointment(new Appointment(1, day + " " + time));
         db.addAppointment(new Appointment(2, day + " " + time));
+
+        createAlarm(1, cal);
+        createAlarm(2, cal);
     }
 
     public void setOneYearDefaults(){
@@ -103,5 +104,20 @@ public class MainActivity extends AppCompatActivity {
         db.addAppointment(new Appointment(4, day + " " + time));
         db.addAppointment(new Appointment(5, day + " " + time));
         db.addAppointment(new Appointment(6, day + " " + time));
+
+        createAlarm(3, cal);
+        createAlarm(4, cal);
+        createAlarm(5, cal);
+        createAlarm(6, cal);
+    }
+
+    private void createAlarm(int id, Calendar cal) {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("requestCode", (int) id);
+        PendingIntent sender = PendingIntent.getBroadcast(this, id, intent, 0);
+
+        // Get the AlarmManager service
+        AlarmManager am = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
     }
 }

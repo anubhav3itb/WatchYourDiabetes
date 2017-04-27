@@ -11,216 +11,309 @@
     android:background="@drawable/gradient"
     tools:context="com.example.anubhavbhardwaj.watchyourdiabetes.Reminders">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:textStyle="bold"
-        android:text="Monthly Reminders"
-        android:ems="10"
-        android:layout_alignParentStart="true"
-        android:id="@+id/Text1"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Endocrinologist"
-        android:ems="10"
-        android:layout_below="@+id/Text1"
-        android:layout_alignParentStart="true"
-        android:id="@+id/endo"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Opthalmologist"
-        android:ems="10"
-        android:layout_below="@+id/Text2"
-        android:layout_alignEnd="@+id/Text2"
-        android:id="@+id/optha"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Nephrologist"
-        android:ems="10"
-        android:layout_below="@+id/optha"
-        android:layout_alignParentStart="true"
-        android:id="@+id/nephro"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Monthly Reminders"
+                    android:ems="10"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/Text1"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Podatrist"
-        android:ems="10"
-        android:layout_below="@+id/nephro"
-        android:layout_alignParentStart="true"
-        android:id="@+id/poda"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:textStyle="bold"
+                    android:text="Day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/Text3"
+                    android:layout_toEndOf="@+id/Text1"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Lipid Specialist"
-        android:ems="10"
-        android:layout_below="@+id/poda"
-        android:layout_alignParentStart="true"
-        android:id="@+id/lipid"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:textStyle="bold"
-        android:text="Yearly Reminders"
-        android:ems="10"
-        android:id="@+id/Text2"
-        android:layout_marginTop="27dp"
-        android:layout_below="@+id/nutri"
-        android:layout_alignParentStart="true"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Endocrinologist"
+                    android:ems="10"
+                    android:layout_alignParentStart="true"
+                    android:id="@+id/endo"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_toEndOf="@+id/Text1"
-        android:id="@+id/endo_days"
-        android:layout_below="@+id/Text1"
-        android:text="30"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/endo_days"
+                    android:text="30"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="30"
-        android:ems="10"
-        android:layout_alignBottom="@+id/nutri"
-        android:layout_toEndOf="@+id/endo"
-        android:id="@+id/nutri_days"
-        android:inputType="number"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="30"
-        android:ems="10"
-        android:layout_below="@+id/Text2"
-        android:layout_toEndOf="@+id/optha"
-        android:id="@+id/optha_days"
-        android:inputType="number"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:text="30"
-        android:ems="10"
-        android:layout_below="@+id/optha_days"
-        android:layout_toEndOf="@+id/nephro"
-        android:id="@+id/nephro_days"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/nutri"
+                    android:text="Nutritionist"
+                    android:layout_alignParentStart="true"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:text="30"
-        android:ems="10"
-        android:layout_below="@+id/nephro_days"
-        android:layout_toEndOf="@+id/poda"
-        android:id="@+id/poda_days"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:ems="10"
+                    android:id="@+id/nutri_days"
+                    android:inputType="number"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="30"
-        android:ems="10"
-        android:layout_alignBottom="@+id/lipid"
-        android:layout_toEndOf="@+id/poda"
-        android:id="@+id/lipid_days"
-        android:inputType="number"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/nutri"
-        android:text="Nutritionist"
-        android:layout_below="@+id/endo"
-        android:layout_alignParentStart="true"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textStyle="bold"
+                    android:text="Yearly Reminders"
+                    android:ems="10"
+                    android:id="@+id/Text2"
+                    android:layout_marginTop="27dp"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+            </LinearLayout>
 
-    <TextView
-        android:textStyle="bold"
-        android:text="Day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/Text3"
-        android:layout_toEndOf="@+id/Text1"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Opthalmologist"
+                    android:ems="10"
+                    android:id="@+id/optha"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
 
-    <TextView
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="Click on days left to update appointment date"
-        android:ems="10"
-        android:layout_below="@+id/lipid"
-        android:layout_marginTop="31dp"
-        android:id="@+id/Text4"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:allowUndo="false"
-        android:textAlignment="center"
-        android:textSize="22sp"
-        android:textColor="@android:color/background_light"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:ems="10"
+                    android:id="@+id/optha_days"
+                    android:inputType="number"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+            </LinearLayout>
 
-    <TextView
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Text4"
-        android:layout_alignParentStart="true"
-        android:id="@+id/Text5"
-        android:layout_alignParentEnd="true"
-        android:textSize="22sp"
-        android:text="Click on doctor to update prescription and appointment date"
-        android:textAlignment="center"
-        android:textColor="@android:color/background_light"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Nephrologist"
+                    android:ems="10"
+                    android:id="@+id/nephro"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="30"
+                    android:ems="10"
+                    android:id="@+id/nephro_days"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Podatrist"
+                    android:ems="10"
+                    android:id="@+id/poda"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="30"
+                    android:ems="10"
+                    android:id="@+id/poda_days"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="Lipid Specialist"
+                    android:ems="10"
+                    android:id="@+id/lipid"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30"
+                    android:ems="10"
+                    android:id="@+id/lipid_days"
+                    android:inputType="number"
+                    android:textSize="22sp"
+                    android:textColor="@android:color/background_light"/>
+            </LinearLayout>
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click on days left to update appointment date"
+                android:layout_marginTop="30dp"
+                android:id="@+id/Info1"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click on doctor to update prescription and appointment date"
+                android:layout_marginTop="20dp"
+                android:id="@+id/Info2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="22sp"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Text4"
+                android:layout_marginTop="27dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:text="Free Advice"
+                android:textAlignment="center"
+                android:textSize="22sp"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/tidbit1"
+                android:layout_alignParentEnd="true"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tidbit2"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/tidbit3"
+                android:layout_alignParentEnd="true"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/tidbit4"
+                android:layout_alignParentEnd="true"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tidbit5"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:textColor="@android:color/background_light"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/tidbit6"
+                android:layout_alignParentEnd="true"
+                android:textColor="@android:color/background_light"/>
+
+        </LinearLayout>
+
+
+    </ScrollView>
 </RelativeLayout>

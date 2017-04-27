@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.anubhavbhardwaj.watchyourdiabetes">
 
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,13 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".EditableInformation"
-            android:label="@string/title_activity_editable_information"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EditableInformation" />
         <activity android:name=".EditableInformation2" />
         <activity android:name=".SetupAppointment" />
         <activity android:name=".Reminders"></activity>
+        <receiver android:name="AlarmReceiver" android:process=":remote"></receiver>
     </application>
 
 </manifest>

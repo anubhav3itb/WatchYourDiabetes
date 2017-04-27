@@ -1,8 +1,12 @@
 package com.example.anubhavbhardwaj.watchyourdiabetes;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +17,9 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 // made in reference with http://www.journaldev.com/9976/android-date-time-picker-dialog
 public class SetupAppointment extends AppCompatActivity implements View.OnClickListener {
@@ -26,6 +32,14 @@ public class SetupAppointment extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_appointment);
+
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        try {
+            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88001b")));
+        }
+        catch (Exception e){
+            Log.d("Ooops",e.toString());
+        }
 
         final DatabaseHandler db = new DatabaseHandler(this);
 
@@ -63,6 +77,16 @@ public class SetupAppointment extends AppCompatActivity implements View.OnClickL
 
                 Intent myIntent = new Intent( SetupAppointment.this, Reminders.class);
                 SetupAppointment.this.startActivity(myIntent);
+
+                Calendar cal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+                try {
+                    cal.setTime(sdf.parse(date + " " + time));
+                    createAlarm(doctor_type, cal);
+                }
+                catch (Exception e){
+                    Log.d("WHY :(", e.toString());
+                }
             }
         });
     }
@@ -112,5 +136,18 @@ public class SetupAppointment extends AppCompatActivity implements View.OnClickL
                     }, mHour, mMinute, false);
             timePickerDialog.show();
         }
+    }
+
+    private void createAlarm(int id, Calendar cal) {
+        Intent intent = new Intent(this, AlarmReceiver.class);
+        intent.putExtra("requestCode", (int) id);
+        PendingIntent sender = PendingIntent.getBroadcast(this, id, intent, 0);
+
+        // Get the AlarmManager service
+        AlarmManager am = (AlarmManager) this.getSystemService(this.ALARM_SERVICE);
+        am.cancel(sender);
+
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+        Toast.makeText(this, "New alarm has been set", Toast.LENGTH_SHORT).show();
     }
 }

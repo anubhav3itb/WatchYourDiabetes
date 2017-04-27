@@ -1,14 +1,17 @@
 package com.example.anubhavbhardwaj.watchyourdiabetes;
 
-import android.app.Notification;
-import android.app.NotificationManager;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.Settings;
-import android.support.v4.app.NotificationCompat;
+import android.os.Vibrator;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by aditya on 27/4/17.
@@ -16,19 +19,39 @@ import android.widget.Toast;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Toast.makeText(context,"Alarm Raised", Toast.LENGTH_SHORT).show();
-        NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Intent intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        PendingIntent pendingIntent= PendingIntent.getActivity(context,0,intent1,0);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setSmallIcon(R.drawable.gradient);
-        builder.setContentTitle("Tracker");
+        Toast.makeText(context,"You have a pending appointment! Check your reminders!", Toast.LENGTH_SHORT).show();
 
-        builder.setContentText("Turn on Gps");
-        builder.setPriority(Notification.PRIORITY_MAX);
-        builder.setDefaults(Notification.DEFAULT_SOUND);
-        builder.setLights(0x0000FF,3000,2000);
-        builder.setContentIntent(pendingIntent);
-        notificationManager.notify(56, builder.build());
+        int code = intent.getIntExtra("requestCode", 2);
+
+        Log.d("WTFFFFFF", Integer.toString(code));
+
+        Calendar cal = Calendar.getInstance();
+        if(code <= 2){
+            cal.add(Calendar.MONTH, 1);
+        }
+        else{
+            cal.add(Calendar.YEAR, 1);
+        }
+
+
+        SimpleDateFormat date_format = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat time_format = new SimpleDateFormat("HH:mm");
+        Date date = cal.getTime();
+        String day = date_format.format(date);
+        String time = time_format.format(date);
+
+        final DatabaseHandler db = new DatabaseHandler(context);
+        db.updateAppointment(new Appointment(code, day + " " + time));
+
+        Intent intent2 = new Intent(context, AlarmReceiver.class);
+        PendingIntent sender = PendingIntent.getBroadcast(context, code, intent2, 0);
+
+        // Get the AlarmManager service
+        AlarmManager am = (AlarmManager) context.getSystemService(context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+
+
+        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(2000);
     }
 }

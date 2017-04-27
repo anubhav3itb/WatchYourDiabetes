@@ -1,6 +1,8 @@
 package com.example.anubhavbhardwaj.watchyourdiabetes;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +18,17 @@ public class EditableInformation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editable_information);
+
+
+        android.support.v7.app.ActionBar bar = getSupportActionBar();
+        bar.show();
+
+        try {
+            bar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#88001b")));
+        }
+        catch (Exception e){
+            Log.d("Ooops",e.toString());
+        }
 
         final DatabaseHandler db = new DatabaseHandler(this);
 
