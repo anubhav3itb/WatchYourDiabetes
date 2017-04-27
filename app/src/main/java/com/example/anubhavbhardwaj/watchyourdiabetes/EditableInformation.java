@@ -19,8 +19,6 @@ public class EditableInformation extends AppCompatActivity {
 
         final DatabaseHandler db = new DatabaseHandler(this);
 
-        //Log.e("FUCK THIS SHIT", String.valueOf(db.getUserCount()));
-
         continue_button = (Button) findViewById(R.id.continuebutton2);
         continue_button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
@@ -40,6 +38,7 @@ public class EditableInformation extends AppCompatActivity {
                 db.addmutableUserData(new MutableUserData(1, weight, height, fastingBloodSugar, postLunchBloodSugar, hba1c));
 
                 Intent myIntent = new Intent( EditableInformation.this, EditableInformation2.class);
+                myIntent.putExtra("doctortype", (int)1);
                 EditableInformation.this.startActivity(myIntent);
             }
         });

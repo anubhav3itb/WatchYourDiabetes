@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/gradient"
     tools:context="com.example.anubhavbhardwaj.watchyourdiabetes.MainActivity">
 
     <Button
@@ -22,22 +23,15 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/weight"
-        android:hint="Weight"
-        android:inputType="number"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:inputType="number"
         android:ems="10"
         android:id="@+id/postlunchbloodsugar"
         android:hint="Post Lunch Blood Sugar"
         android:layout_below="@+id/fastbloodsugar"
         android:layout_alignStart="@+id/fastbloodsugar"
-        android:layout_marginBottom="22dp" />
+        android:layout_marginBottom="22dp"
+        android:text="1"
+        android:textColor="@android:color/background_light"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -48,7 +42,9 @@
         android:hint="HBA1C"
         android:layout_below="@+id/fastbloodsugar"
         android:layout_alignStart="@+id/fastbloodsugar"
-        android:layout_marginTop="37dp" />
+        android:layout_marginTop="37dp"
+        android:text="1"
+        android:textColor="@android:color/background_light"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -58,7 +54,9 @@
         android:hint="Height"
         android:inputType="number"
         android:layout_below="@+id/weight"
-        android:layout_alignStart="@+id/weight" />
+        android:layout_alignStart="@+id/weight"
+        android:text="6"
+        android:textColor="@android:color/background_light"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -68,6 +66,80 @@
         android:id="@+id/fastbloodsugar"
         android:hint="Fasting Blood Sugar"
         android:layout_below="@+id/height"
-        android:layout_alignStart="@+id/height" />
+        android:layout_alignStart="@+id/height"
+        android:text="1"
+        android:textColor="@android:color/background_light"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/weight"
+        android:hint="Weight"
+        android:inputType="number"
+        android:text="68"
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/weight"
+        android:layout_above="@+id/height"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:text="Height"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView6"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView8"
+        android:layout_toStartOf="@+id/height"
+        android:layout_above="@+id/fastbloodsugar"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:text="Post Fasting Blood Sugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView8"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView9"
+        android:layout_alignBottom="@+id/fastbloodsugar"
+        android:layout_toStartOf="@+id/postlunchbloodsugar"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:text="Post Lunch Blood Sugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView9"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView10"
+        android:layout_alignBottom="@+id/postlunchbloodsugar"
+        android:layout_toStartOf="@+id/postlunchbloodsugar"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:text="HBA1C Level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView10"
+        android:layout_alignParentStart="true"
+        android:id="@+id/textView11"
+        android:layout_alignBottom="@+id/hba"
+        android:layout_toStartOf="@+id/postlunchbloodsugar"
+        android:textColor="@android:color/background_light"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

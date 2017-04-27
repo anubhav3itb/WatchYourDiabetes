@@ -5,7 +5,7 @@ package com.example.anubhavbhardwaj.watchyourdiabetes;
  */
 
 public class Prescription {
-    int id;
+    int id;                         // the id is the doctor type which prescribed this prescription
     String medicine1; int dosage1;
     String medicine2; int dosage2;
     String medicine3; int dosage3;

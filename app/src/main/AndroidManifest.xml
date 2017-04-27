@@ -20,9 +20,8 @@
             android:label="@string/title_activity_editable_information"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EditableInformation2" />
-        <activity android:name=".GetFirst" />
         <activity android:name=".SetupAppointment" />
-        <activity android:name=".Reminder"></activity>
+        <activity android:name=".Reminders"></activity>
     </application>
 
 </manifest>

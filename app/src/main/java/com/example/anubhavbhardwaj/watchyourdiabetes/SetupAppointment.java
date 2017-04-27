@@ -1,21 +1,26 @@
 package com.example.anubhavbhardwaj.watchyourdiabetes;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-public class SetupAppointment extends AppCompatActivity {
+import java.util.Calendar;
 
-    Button endo;
-    Button nutri;
-    Button optha;
-    Button nephro;
-    Button podia;
-    Button lipid;
-    Button home;
+// made in reference with http://www.journaldev.com/9976/android-date-time-picker-dialog
+public class SetupAppointment extends AppCompatActivity implements View.OnClickListener {
+
+    Button btnDatePicker, btnTimePicker;
+    EditText txtDate, txtTime;
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,67 +29,88 @@ public class SetupAppointment extends AppCompatActivity {
 
         final DatabaseHandler db = new DatabaseHandler(this);
 
-        Prescription pres = db.getPrescription(1);
+        int doctor_type_tmp = 1;
+        Bundle extras = getIntent().getExtras();
+        try {
+            doctor_type_tmp = extras.getInt("doctortype");
 
-        String to_print = "Success! Your endocrinologist prescription is as follows: " + pres.getMedicine1() + " = " + String.valueOf(pres.getDosage1());
+        }
+        catch(Exception e){
+            assert(1 < 0);
+        }
 
-        Toast.makeText(this, to_print, Toast.LENGTH_SHORT);
+        final int doctor_type = doctor_type_tmp;
 
-        endo = (Button) findViewById(R.id.Endocrinologist);
-        endo.setOnClickListener(new View.OnClickListener(){
+        assert(doctor_type > 0);
+
+        btnDatePicker=(Button)findViewById(R.id.btn_date);
+        btnTimePicker=(Button)findViewById(R.id.btn_time);
+        txtDate=(EditText)findViewById(R.id.in_date);
+        txtTime=(EditText)findViewById(R.id.in_time);
+
+        btnDatePicker.setOnClickListener(this);
+        btnTimePicker.setOnClickListener(this);
+
+        Button continue_button = (Button) findViewById(R.id.submitDate);
+        continue_button.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, GetFirst.class);
+                String date = txtDate.getText().toString();
+                String time = txtTime.getText().toString();
+
+                db.updateAppointment(new Appointment(doctor_type, date + " " + time));
+
+                Log.d("TIME", date + " " + time);
+
+                Intent myIntent = new Intent( SetupAppointment.this, Reminders.class);
                 SetupAppointment.this.startActivity(myIntent);
             }
         });
+    }
 
-        nutri = (Button) findViewById(R.id.Nutritionist);
-        nutri.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, GetFirst.class);
-                SetupAppointment.this.startActivity(myIntent);
-            }
-        });
+    @Override
+    public void onClick(View v) {
 
-        optha = (Button) findViewById(R.id.Opthalmologist);
-        optha.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, GetFirst.class);
-                SetupAppointment.this.startActivity(myIntent);
-            }
-        });
+        if (v == btnDatePicker) {
 
-        nephro = (Button) findViewById(R.id.Nephrologist);
-        nephro.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, GetFirst.class);
-                SetupAppointment.this.startActivity(myIntent);
-            }
-        });
+            // Get Current Date
+            final Calendar c = Calendar.getInstance();
+            mYear = c.get(Calendar.YEAR);
+            mMonth = c.get(Calendar.MONTH);
+            mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        podia = (Button) findViewById(R.id.Podiatrist);
-        podia.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, GetFirst.class);
-                SetupAppointment.this.startActivity(myIntent);
-            }
-        });
 
-        lipid = (Button) findViewById(R.id.Lipid);
-        lipid.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, GetFirst.class);
-                SetupAppointment.this.startActivity(myIntent);
-            }
-        });
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    new DatePickerDialog.OnDateSetListener() {
 
-        home = (Button) findViewById(R.id.home);
-        home.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
-                Intent myIntent = new Intent( SetupAppointment.this, Reminder.class);
-                SetupAppointment.this.startActivity(myIntent);
-            }
-        });
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
 
+                            txtDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+        }
+        if (v == btnTimePicker) {
+
+            // Get Current Time
+            final Calendar c = Calendar.getInstance();
+            mHour = c.get(Calendar.HOUR_OF_DAY);
+            mMinute = c.get(Calendar.MINUTE);
+
+            // Launch Time Picker Dialog
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                    new TimePickerDialog.OnTimeSetListener() {
+
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay,
+                                              int minute) {
+
+                            txtTime.setText(hourOfDay + ":" + minute);
+                        }
+                    }, mHour, mMinute, false);
+            timePickerDialog.show();
+        }
     }
 }

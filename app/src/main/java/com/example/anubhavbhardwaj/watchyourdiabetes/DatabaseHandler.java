@@ -14,44 +14,44 @@ import static android.database.DatabaseUtils.dumpCursorToString;
  */
 
 public class DatabaseHandler  extends SQLiteOpenHelper {
-    // All Static variables
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;          // Database Version
+    private static final String DATABASE_NAME = "WYD";      // Database Name
 
-    // Database Name
-    private static final String DATABASE_NAME = "WYD";
+    // Common column name for primary key
+    private static final String KEY_ID = "id";
 
     // User table name
-    private static final String TABLE_USER = "User";
-
-    // Contacts Table Columns name
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_AGE = "age";
-    private static final String KEY_SEX = "sex";
+    private static final String TABLE_USER  = "User";
+    // User Table Columns name
+    private static final String KEY_NAME    = "name";
+    private static final String KEY_AGE     = "age";
+    private static final String KEY_SEX     = "sex";
 
 
     // Mutable User Data table name
     private static final String TABLE_USER_DATA = "UserData";
-
     // Contacts Table Columns name
-    private static final String KEY_WEIGHT = "weight";
-    private static final String KEY_HEIGHT = "height";
-    private static final String KEY_FASTING_BLOOD_SUGAR = "fastingBloodSugar";
-    private static final String KEY_POST_LUNCH_BLOOD_SUGAR = "postLunchBloodSugar";
-    private static final String KEY_HBA1C = "hba1c";
+    private static final String KEY_WEIGHT                      = "weight";
+    private static final String KEY_HEIGHT                      = "height";
+    private static final String KEY_FASTING_BLOOD_SUGAR         = "fastingBloodSugar";
+    private static final String KEY_POST_LUNCH_BLOOD_SUGAR      = "postLunchBloodSugar";
+    private static final String KEY_HBA1C                       = "hba1c";
 
 
     // Prescription Data table name
     private static final String TABLE_PRESCRIPTION = "Prescription";
-
     // Contacts Table Columns name
-    private static final String KEY_MEDICINE_1 = "medicine1";
-    private static final String KEY_DOSAGE_1 = "dosage1";
-    private static final String KEY_MEDICINE_2 = "medicine2";
-    private static final String KEY_DOSAGE_2 = "dosage2";
-    private static final String KEY_MEDICINE_3 = "medicine3";
-    private static final String KEY_DOSAGE_3 = "dosage3";
+    private static final String KEY_MEDICINE_1      = "medicine1";
+    private static final String KEY_DOSAGE_1        = "dosage1";
+    private static final String KEY_MEDICINE_2      = "medicine2";
+    private static final String KEY_DOSAGE_2        = "dosage2";
+    private static final String KEY_MEDICINE_3      = "medicine3";
+    private static final String KEY_DOSAGE_3        = "dosage3";
+
+    // Appointment table name
+    private static final String TABLE_APPOINTMENT = "Appointment";
+    // Contacts Table Columns name
+    private static final String KEY_DATE = "date";
 
 
     public DatabaseHandler(Context context) {
@@ -89,6 +89,11 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
                 + KEY_MEDICINE_3 + " TEXT,"
                 + KEY_DOSAGE_3 + " INTEGER" + ")";
         db.execSQL(CREATE_PRESCRIPTION_TABLE);
+
+        String CREATE_APPOINTMENT_TABLE = "CREATE TABLE " + TABLE_APPOINTMENT + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_DATE + " TEXT" + ")";
+        db.execSQL(CREATE_APPOINTMENT_TABLE);
     }
 
     // Upgrading database
@@ -98,6 +103,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_DATA);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRESCRIPTION);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_APPOINTMENT);
 
         // Create tables again
         onCreate(db);
@@ -242,7 +248,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, 1);
+        values.put(KEY_ID, pres.getId());
         values.put(KEY_MEDICINE_1,  pres.getMedicine1());
         values.put(KEY_DOSAGE_1,    pres.getDosage1());
         values.put(KEY_MEDICINE_2,  pres.getMedicine2());
@@ -256,9 +262,19 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
 
     public Prescription getPrescription(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        Cursor cursor = db.query(TABLE_PRESCRIPTION, new String[] { KEY_ID,
+        Cursor cursor = db.rawQuery("Select * from " + TABLE_PRESCRIPTION + " where " + KEY_ID + " = " + Integer.toString(id), null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            Prescription pres = new Prescription(id, "Medicine 1", 1, "Medicine 2", 1, "Medicine 3", 1);
+            addPrescription(pres);
+            return pres;
+        }
+
+        db = this.getReadableDatabase();
+
+        cursor = db.query(TABLE_PRESCRIPTION, new String[] { KEY_ID,
                         KEY_MEDICINE_1, KEY_DOSAGE_1, KEY_MEDICINE_2, KEY_DOSAGE_2, KEY_MEDICINE_3, KEY_DOSAGE_3 }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -276,8 +292,15 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
     public int updatePrescription(Prescription pres){
         SQLiteDatabase db = this.getWritableDatabase();
 
+        Cursor cursor = db.rawQuery("Select * from " + TABLE_PRESCRIPTION + " where " + KEY_ID + " = " + Integer.toString(pres.getId()), null);
+        if(cursor.getCount() <= 0){
+            cursor.close();
+            addPrescription(pres);
+            return 1;
+        }
+
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, 1);
+        values.put(KEY_ID, pres.getId());
         values.put(KEY_MEDICINE_1,  pres.getMedicine1());
         values.put(KEY_DOSAGE_1,    pres.getDosage1());
         values.put(KEY_MEDICINE_2,  pres.getMedicine2());
@@ -300,6 +323,67 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
     public int getPrescriptionCount() {
         String countQuery = "SELECT  * FROM " + TABLE_PRESCRIPTION;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+
+        int ans = cursor.getCount();
+        cursor.close();
+
+        return ans;
+    }
+
+    // Appointments
+    public void addAppointment(Appointment apt){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, apt.getId());
+        values.put(KEY_DATE,  apt.getDate());
+
+        db.insert(TABLE_APPOINTMENT, null, values);
+        db.close();
+    }
+
+
+    public Appointment getAppointment(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_APPOINTMENT, new String[] { KEY_ID,
+                        KEY_DATE}, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        else{
+
+        }
+
+
+        Appointment apt = new Appointment(Integer.parseInt(cursor.getString(0)), cursor.getString(1));
+
+        return apt;
+    }
+
+    public int updateAppointment(Appointment apt){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, apt.getId());
+        values.put(KEY_DATE,  apt.getDate());
+
+        // updating row
+        return db.update(TABLE_APPOINTMENT, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(apt.getId()) });
+    }
+
+    public void deleteAppointment(Appointment apt){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_APPOINTMENT, KEY_ID + " = ?",
+                new String[] { String.valueOf(apt.getId()) });
+        db.close();
+    }
+
+    public int getAppointmentCount() {
+        String countQuery = "SELECT  * FROM " + TABLE_APPOINTMENT;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
 

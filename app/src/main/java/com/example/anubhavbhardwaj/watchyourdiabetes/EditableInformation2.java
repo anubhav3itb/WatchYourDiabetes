@@ -17,9 +17,43 @@ public class EditableInformation2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editable_information2);
 
+        int doctor_type_tmp = 1;
+        Bundle extras = getIntent().getExtras();
+        try {
+            doctor_type_tmp = extras.getInt("doctortype");
+
+        }
+        catch(Exception e){
+            assert(1 < 0);
+        }
+
+        final int doctor_type = doctor_type_tmp;
+
+        assert(doctor_type > 0);
+
+        Log.d("SOMETHING", Integer.toString(doctor_type));
+
         final DatabaseHandler db = new DatabaseHandler(this);
 
-        MutableUserData data = db.getMutableUserData();
+        EditText vmedicine1 = (EditText) findViewById(R.id.medicine1);
+        EditText vmedicine2 = (EditText) findViewById(R.id.medicine2);
+        EditText vmedicine3 = (EditText) findViewById(R.id.medicine3);
+
+        EditText vdosage1 = (EditText) findViewById(R.id.dosage1);
+        EditText vdosage2 = (EditText) findViewById(R.id.dosage2);
+        EditText vdosage3 = (EditText) findViewById(R.id.dosage3);
+
+        Prescription pres = db.getPrescription(doctor_type);
+
+        Log.d("TESTIT", pres.getMedicine1());
+
+        vmedicine1.setText(pres.getMedicine1());
+        vmedicine2.setText(pres.getMedicine2());
+        vmedicine3.setText(pres.getMedicine3());
+
+        vdosage1.setText(Integer.toString(pres.getDosage1()));
+        vdosage2.setText(Integer.toString(pres.getDosage2()));
+        vdosage3.setText(Integer.toString(pres.getDosage3()));
 
         continue_button = (Button) findViewById(R.id.submit);
         continue_button.setOnClickListener(new View.OnClickListener(){
@@ -41,10 +75,11 @@ public class EditableInformation2 extends AppCompatActivity {
                 int dosage2 = Integer.parseInt(vdosage2.getText().toString());
                 int dosage3 = Integer.parseInt(vdosage3.getText().toString());
 
-                db.addPrescription(new Prescription(1, medicine1, dosage1, medicine2, dosage2, medicine3, dosage3));
+                db.updatePrescription(new Prescription(doctor_type, medicine1, dosage1, medicine2, dosage2, medicine3, dosage3));
 
                 Intent myIntent = new Intent( EditableInformation2.this, SetupAppointment.class);
-                EditableInformation2.this.startActivity(myIntent);
+                myIntent.putExtra("doctortype", (int)doctor_type);
+                startActivity(myIntent);
             }
         });
     }
